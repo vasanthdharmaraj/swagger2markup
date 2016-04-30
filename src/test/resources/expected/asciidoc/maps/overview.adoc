@@ -1,0 +1,33 @@
+= Title
+
+
+[[_overview]]
+== Overview
+Description
+
+
+=== Version information
+[%hardbreaks]
+_Version_ : Developer build
+
+
+=== Contact information
+[%hardbreaks]
+_Contact_ : (Contact name)
+
+
+=== URI scheme
+[%hardbreaks]
+_Host_ : localhost:8080
+_BasePath_ : /engine
+
+
+=== Tags
+
+* metrics-mvc-endpoint : Metrics Mvc Endpoint
+* endpoint-mvc-adapter : Endpoint Mvc Adapter
+* health-mvc-endpoint : Health Mvc Endpoint
+* environment-mvc-endpoint : Environment Mvc Endpoint
+
+
+

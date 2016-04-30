@@ -1,0 +1,15 @@
+
+[[_tag]]
+=== Tag
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|*id* +
+_optional_||integer(int64)
+|*name* +
+_optional_||string
+|===
+
+
+

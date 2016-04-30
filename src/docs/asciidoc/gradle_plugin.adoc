@@ -1,0 +1,62 @@
+== Gradle Plugin
+
+Swagger2Markup provides a Gradle plugin. The Gradle plugin is published in JCenter and Maven Central. 
+
+NOTE: The Gradle Plugin requires at least JDK 8.
+
+=== Usage guide
+
+Add the following snippet to your Gradle build file:
+
+[source,java]
+[source,groovy, subs="attributes"]
+----
+buildscript {
+    repositories {
+        jcenter()
+        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+    }
+
+    dependencies {
+        classpath 'io.github.swagger2markup:swagger2markup-gradle-plugin:{project-version}'
+    }
+}
+
+apply plugin: 'io.github.swagger2markup'
+----
+
+The plugin adds a new task named ``convertSwagger2markup``. You can run the task as follows:
+
+`gradlew convertSwagger2markup` 
+
+=== Configuration
+
+You can customize the task by configuring a Map of <<Swagger2Markup properties>>.
+
+[source,groovy]
+----
+convertSwagger2markup {
+    swaggerInput file("src/docs/swagger/swagger_petstore.yaml").getAbsolutePath()
+    outputDir file("${buildDir}/asciidoc")
+    config = ['swagger2markup.markupLanguage' : 'ASCIIDOC',
+              'swagger2markup.pathsGroupedBy' : 'TAGS']
+}
+
+----
+
+[options="header"]
+.Gradle Plugin properties
+|====
+| Name | Description | Type |  Example
+| swaggerInput | The URL or file path to the Swagger specification | String | `file("src/docs/swagger/swagger_petstore.yaml").getAbsolutePath()` or `http://petstore.swagger.io/v2/swagger.json` 
+| outputDir | The directory where the output should be stored. | File | `file("${buildDir}/asciidoc")` 
+| outputFile | The file path (without extension) where the output should be stored. | File | `file("${buildDir}/asciidoc/swagger")` 
+| config | The Swagger2Markup properties to configure the converter | Map |  | 
+|====
+
+=== Example
+
+You can copy the template project from GitHub to get started.
+
+https://github.com/Swagger2Markup/swagger2markup-gradle-project-template
+

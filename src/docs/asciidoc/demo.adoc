@@ -1,0 +1,82 @@
+== Spring Boot and Springfox
+
+If you use Spring Boot and Springfox or Swagger JAX-RS, you can do the following:
+
+*   generate an up-to-date Swagger JSON file during an unit or integration test
+*   convert the Swagger JSON file into AsciiDoc
+*   add hand-written AsciiDoc documentation
+*   convert AsciiDoc into HTML and PDF
+*   copy the HTML and PDF artifacts into an executable Spring Boot Jar file and serve it as static content
+
+This transformation pipeline can be done with Gradle or Maven in the build phase. That way there is no runtime overhead and there are no additional runtime libraries required.
+
+The Swagger2MarkupConverter can be used to make a request to a remote Swagger endpoint during an integration test. The Swagger2MarkupConverter allows to write the generated documents into any folder. In this this example it is ``src/docs/asciidoc/generated``.
+
+[source,java]
+----
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = {Application.class, SwaggerConfig.class})
+@WebIntegrationTest
+public class Swagger2MarkupTest {
+
+    @Test
+    public void convertRemoteSwaggerToAsciiDoc() {
+        // Remote Swagger source
+        Swagger2MarkupConverter.from(new URL("http://localhost:8080/v2/api-docs")).build()
+            .toFolder(Paths.get("src/docs/asciidoc/generated"));
+    }
+}
+----
+
+Spring's MVC Test framework can also be used to make a request to a Springfox Swagger endpoint during an unit test. A custom ResultHandler ``Swagger2MarkupResultHandler`` can be used to write the Swagger JSON response into a directory. The custom ResultHandler is part of ``springfox-staticdocs``. That way you also verify that your Swagger endpoint is working.
+The Swagger JSON response can be converted using the <<Gradle Plugin>> or <<Maven Plugin>>.
+
+[source,java]
+----
+@WebAppConfiguration
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = {Application.class, SwaggerConfig.class})
+public class Swagger2MarkupTest {
+
+    @Autowired
+    private WebApplicationContext context;
+
+    private MockMvc mockMvc;
+
+    @Before
+    public void setUp() {
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
+    }
+
+    @Test
+    public void convertSwaggerToAsciiDoc() throws Exception {
+        this.mockMvc.perform(get("/v2/api-docs")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(Swagger2MarkupResultHandler
+                    .outputDirectory("src/docs/asciidoc/generated").build())
+                .andExpect(status().isOk());
+    }
+}
+----
+
+=== Demo
+
+The quickest way to get started is to look at the demo project https://github.com/Swagger2Markup/spring-swagger2markup-demo[spring-swagger2markup-demo]. The demo shows how to generate static docs (HTML5 and PDF) by using the Swagger2Markup Gradle Plugin and serve the generated documentation as static content in a Spring Boot App under http://localhost:9080/docs/index.html and http://localhost:9080/docs/index.pdf.
+
+If you want to start the Spring Boot application, please run:
+
+[source, java, subs="attributes"]
+----
+gradlew clean build
+----
+
+----
+java -jar build/libs/spring-swagger2markup-demo-{project-version}.jar
+----
+
+If you only want to generate the HTML and PDF documentation, please run:
+
+----
+gradlew clean asciidoctor
+----
+

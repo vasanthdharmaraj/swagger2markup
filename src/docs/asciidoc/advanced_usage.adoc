@@ -1,0 +1,94 @@
+== Advanced usage
+
+[[swagger_operationId]]
+=== Swagger operationId
+
+Swagger2Markup uniquely identify each operations for multiple purposes :
+
+  * generating separated operation files : file name
+  * generating unique Markup anchors for operations and all sub-items.
+  * searching for extra content for operations : operation folder name for content plugins (Hand-written descriptions, Dynamic content, etc...)
+  * ...
+
+Swagger specification supports the `operationId` field which create an unique name for each operation.
+When provided, this `operationId` value will be used primarily. Otherwise Swagger2Markup generates an id using `normalize(operation.summary + " " + lowerCase(operation.HTTPmethod))`.
+
+IMPORTANT: It is highly recommended to set an operationId for each operation, so that a lot of actions does not depend on operation `summary` which *can change at anytime*.
+  
+=== Swagger schema title
+
+Swagger2Markup displays inline schemas by decomposing them (when schema is complex). In this process, some intermediate references are generated using field names which is not always the best choice.
+The Swagger document supports JSON Schema `title` items in inline schemas.
+It's recommended to use them in inline schemas so that they'll be used primarily to field names and this will lead to a better naming.
+
+.Inline schema without title items
+====
+[source,yaml,subs="quotes"]
+----
+  InlinePet:
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        type: integer
+        format: int64
+      category:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+          name:
+            type: string
+      tags:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            name:
+              type: string
+----
+ 
+image::images/untitledSwagger.png[]
+====
+
+.Inline schema with title items
+====
+[source,yaml,subs="quotes"]
+----
+  InlineTitlePet:
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        type: integer
+        format: int64
+      category:
+        type: object
+        *title: CategoryModel*
+        properties:
+          id:
+            type: integer
+            format: int64
+          name:
+            type: string
+      tags:
+        type: array
+        items:
+          type: object
+          *title: TagModel*
+          properties:
+            id:
+              type: integer
+              format: int64
+            name:
+              type: string
+----
+
+image::images/titledSwagger.png[]
+====

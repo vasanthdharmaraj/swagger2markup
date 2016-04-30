@@ -1,0 +1,209 @@
+
+[[_paths]]
+== Paths
+
+[[_createintegermetrics]]
+=== Create integer Metrics
+....
+POST /integerMetrics
+....
+
+
+==== Description
+Returns integer metrics information for the application.
+
+
+==== Parameters
+
+[options="header", cols=".^1,.^3,.^10,.^4,.^2"]
+|===
+|Type|Name|Description|Schema|Default
+|*Body*|*body* +
+_optional_|String metrics|< string, integer(int32) > map|
+|===
+
+
+==== Responses
+
+[options="header", cols=".^1,.^15,.^4"]
+|===
+|HTTP Code|Description|Schema
+|*200*|OK|< string, string > map
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `*/*`
+
+
+==== Tags
+
+* Spring Boot Actuator
+
+
+[[_createmappings]]
+=== Create Path Mappings
+....
+POST /mappings
+....
+
+
+==== Description
+Returns a collated list of all `@RequestMapping` paths.
+
+
+==== Parameters
+
+[options="header", cols=".^1,.^3,.^10,.^4,.^2"]
+|===
+|Type|Name|Description|Schema|Default
+|*Body*|*body* +
+_optional_|Mappings|< string, <<_mappinginfo,MappingInfo>> > map|
+|===
+
+
+==== Responses
+
+[options="header", cols=".^1,.^15,.^4"]
+|===
+|HTTP Code|Description|Schema
+|*200*|OK|< string, <<_mappinginfo,MappingInfo>> > map
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `*/*`
+
+
+==== Tags
+
+* Spring Boot Actuator
+
+
+[[_createmetrics]]
+=== Create Metrics
+....
+POST /metrics
+....
+
+
+==== Description
+Returns metrics information for the application.
+
+
+==== Parameters
+
+[options="header", cols=".^1,.^3,.^10,.^4,.^2"]
+|===
+|Type|Name|Description|Schema|Default
+|*Body*|*body* +
+_optional_|Metrics|< string, <<_createmetrics_body,body>> > map|
+|===
+
+[[_createmetrics_body]]
+*body*
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|*p1* +
+_optional_||string
+|*p2* +
+_optional_||string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^1,.^15,.^4"]
+|===
+|HTTP Code|Description|Schema
+|*200*|OK|< string, <<_createmetrics_response_200,Response 200>> > map
+|===
+
+[[_createmetrics_response_200]]
+*Response 200*
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|*p1* +
+_optional_||string
+|*p2* +
+_optional_||string
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `*/*`
+
+
+==== Tags
+
+* Spring Boot Actuator
+
+
+[[_createstringmetrics]]
+=== Create string Metrics
+....
+POST /stringMetrics
+....
+
+
+==== Description
+Returns string metrics information for the application.
+
+
+==== Parameters
+
+[options="header", cols=".^1,.^3,.^10,.^4,.^2"]
+|===
+|Type|Name|Description|Schema|Default
+|*Body*|*body* +
+_optional_|String metrics|< string, string > map|
+|===
+
+
+==== Responses
+
+[options="header", cols=".^1,.^15,.^4"]
+|===
+|HTTP Code|Description|Schema
+|*200*|OK|< string, string > map
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `*/*`
+
+
+==== Tags
+
+* Spring Boot Actuator
+
+
+

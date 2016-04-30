@@ -1,0 +1,103 @@
+== Command Line Interface
+
+Swagger2Markup provides a Command line interface (CLI). The CLI is published in JCenter and Maven Central. The artifacts can be viewed at the following locations:
+
+*   Releases: https://jcenter.bintray.com/io/github/swagger2markup/swagger2markup-cli/
+
+*   Snapshots: https://oss.jfrog.org/artifactory/oss-snapshot-local/io/github/swagger2markup/swagger2markup-cli/
+
+NOTE: The CLI requires at least JDK 8.
+
+=== Usage guide
+
+==== Show help
+
+You can show the help:
+
+[source, subs="attributes"]
+----
+java -jar swagger2markup-cli-{project-version}.jar help convert
+----
+
+Output: 
+----
+NAME
+        swagger2markup convert - Converts a Swagger JSON or YAML file into
+        Markup documents.
+
+SYNOPSIS
+        swagger2markup convert [(-c <configFile> | --config <configFile>)]
+                [(-d <outputDir> | --outputDir <outputDir>)]
+                [(-f <outputFile> | --outputFile <outputFile>)]
+                (-i <swaggerInput> | --swaggerInput <swaggerInput>)
+
+OPTIONS
+        -c <configFile>, --config <configFile>
+            Config file.
+
+        -d <outputDir>, --outputDir <outputDir>
+            Output directory. Converts the Swagger specification into multiple
+            files.
+
+        -f <outputFile>, --outputFile <outputFile>
+            Output file. Converts the Swagger specification into one file.
+
+        -h, --help
+            Display help information
+
+        -i <swaggerInput>, --swaggerInput <swaggerInput>
+            Swagger input. Can either be a URL or a file path.
+
+
+----
+
+==== Conversion into a folder
+
+You can convert a Swagger file into a folder as follows:
+
+[source, subs="attributes"]
+----
+java -jar swagger2markup-cli-1.0.0-SNAPSHOT.jar convert -i /path/to/swagger_petstore.yaml -d /tmp/asiidoc
+----
+
+It generates the Markup documents into the `/tmp/asiidoc` folder.
+
+==== Conversion into a file
+
+You can convert a local Swagger file into a file as follows:
+
+[source, subs="attributes"]
+----
+java -jar swagger2markup-cli-1.0.0-SNAPSHOT.jar convert -i /path/to/swagger_petstore.yaml -f /tmp/asiidoc/swagger
+----
+
+NOTE: The input file must not have a file extension
+
+It generates the Markup documents into the file `/tmp/asiidoc/swagger.adoc`.
+
+==== Conversion of  a remote Swagger file
+
+You can convert a remote Swagger specification which must be accessible via HTTP.
+
+[source, subs="attributes"]
+----
+java -jar swagger2markup-cli-1.0.0-SNAPSHOT.jar convert -i "http://petstore.swagger.io/v2/swagger.json" -d /tmp
+----
+
+=== Configuration
+
+Create a `config.properties` file to customize the <<Swagger2Markup properties>>. For Example: 
+
+.config.properties
+----
+swagger2markup.markupLanguage=MARKDOWN
+swagger2markup.outputLanguage=DE
+----
+
+Invoke the CLI as follows:
+
+[source, subs="attributes"]
+----
+java -jar swagger2markup-cli-1.0.0-SNAPSHOT.jar convert -i /path/to/swagger_petstore.yaml -o /tmp -c /path/to/config.properties
+----
+
